@@ -1,20 +1,21 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { IProduct } from "@/app/admin/dashboard/page";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const initialState: IProduct = {
     _id: "",
     imgSrc: "",
-    fileKey: "",
+    filekey: "",
     name: "",
     price: "",
     category: "",
-}
+};
 
 export const productSlice = createSlice({
     name: "productSlice",
     initialState,
     reducers: {
         setProduct: (state, action: PayloadAction<IProduct>) => {
-            return action.payload
+            return action.payload;
         },
     },
 });

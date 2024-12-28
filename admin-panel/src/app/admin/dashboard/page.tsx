@@ -1,9 +1,36 @@
-import React from 'react';
+"use client";
+import { setLoading } from '@/redux/features/loadingSlice';
+import { useAppDispatch } from '@/redux/hook'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+
+export interface IProduct {
+  _id: string;
+  imgSrc: string;
+  filekey: string;
+  name: string;
+  price: string;
+  category: string;
+}
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  );
+  const [products, setProducts] = useState([]);
+  const [openPopup, setOpenPopup] = useState([false]);
+  const [updateTable, setUpdateTable] = useState([false]);
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(setLoading(true));
+
+    axios
+      .get("/api/get_products")
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.log(err))
+      .finally(() => dispatch(setLoading(false)));  
+  }, [updateTable, setUpdateTable]);
+
+  return <div>Dashboard</div>
 };
 
-export default Dashboard
+export default Dashboard;
