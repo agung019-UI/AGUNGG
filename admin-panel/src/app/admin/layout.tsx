@@ -1,7 +1,7 @@
 "use client"
-import Loader from "@/components/admin-apnel/loader";
-import Login from "@/components/admin-apnel/login";
-import Sidebar from "@/components/admin-apnel/Sidebar";
+import Loader from "@/components/admin-panel/loader";
+import Login from "@/components/admin-panel/login";
+import Sidebar from "@/components/admin-panel/Sidebar";
 import { useAppSelector } from "@/redux/hook";
 import { useSession } from  "next-auth/react";
 import React from 'react';

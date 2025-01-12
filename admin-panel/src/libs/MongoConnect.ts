@@ -1,25 +1,30 @@
 import mongoose from "mongoose";
 
 export const connectMongoDB = async () => {
-    try {
+  try {
+    // Cek apakah sudah ada koneksi aktif
+    //statement ini akan berjalan ketika web telah terhubung dengan DB
     if (mongoose.connection.readyState === 1) {
-        return mongoose.connection.asPromise();
+      console.log("MongoDB is already connected");
+      return mongoose.connection.asPromise();  // Kembalikan koneksi yang sudah ada
     }
 
-    const mongoURL = process.env.MONGO_URI;
+    //statement ini berjalan ketika kondisi web belom terhubung dengan DB
+    // Cek apakah MONGO_URL tersedia
+    const mongoURL = process.env.MONGO_URL;
     if (!mongoURL) {
-        throw new Error("MongoDB Connection URL is not defined in environment variables");
+      throw new Error("MongoDB connection URL is not defined in environment variables");
     }
 
-    const connection = await mongoose.connect(mongoURL, {
-        dbName: "Kulss",
-    });
+    // Sambungkan ke MongoDB jika belum terkoneksi
+    const connection = await mongoose.connect(mongoURL)
 
-    console.log("Connected to MongoDB Successfully");
-    return connection;
+    console.log("Connected to MongoDB successfully");
+    return connection; // Kembalikan koneksi setelah berhasil
+    //**/
 
-    } catch (error) {
+  } catch (error) {
     console.error("Error connecting to MongoDB:", error);
-    throw error;
-    }
+    throw error; // Lempar ulang error untuk penanganan lebih lanjut di layer lain
+  }
 };
